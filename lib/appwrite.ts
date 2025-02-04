@@ -1,7 +1,7 @@
 import { Account, Avatars, Client, OAuthProvider } from "react-native-appwrite";
 
 import * as Linking from "expo-linking";
-import {openAuthSessionAsync} from 'expo-web-browser'
+import { openAuthSessionAsync } from "expo-web-browser";
 
 export const config = {
   platform: "com.tee.restate",
@@ -55,33 +55,30 @@ export async function login() {
   }
 }
 
-export async function logout () {
-    try {
-        await account.deleteSession('current')
-        return true
-    } catch (error) {
-        console.error(error)
-        return false        
-    }
+export async function logout() {
+  try {
+    await account.deleteSession("current");
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
 
-export async function getUser() {
-    try {
-        const response = await account.get()
-        if(response.$id) {
-            // generate imgage/Avatar
-            const userAvatar = avatar.getInitials(response.name)
+export async function getCurrentUser() {
+  try {
+    const response = await account.get();
+    if (response.$id) {
+      // generate imgage/Avatar
+      const userAvatar = avatar.getInitials(response.name);
 
-             return {
-                ...response,
-                avatar: userAvatar.toString()
-             }
-        }
-       
-    } catch (error) {
-        console.error(error)
-        return null
-        
+      return {
+        ...response,
+        avatar: userAvatar.toString(),
+      };
     }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
-
